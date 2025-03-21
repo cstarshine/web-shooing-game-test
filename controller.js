@@ -22,7 +22,7 @@ class GameManager {
       let size = v.getSize();
       ctx.beginPath();
       ctx.rect(position.x, position.y, size, size);
-      ctx.fillStyle = "#FF0000";
+      ctx.fillStyle = v.getColor();
       ctx.fill();
       ctx.closePath();
     });

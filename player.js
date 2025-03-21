@@ -5,6 +5,8 @@ class Player extends GameObject {
     this.bullets = [];
     this.maxBullets = 10;
     this.fireRate = 500;
+    this.fillColor = "lightblue";
+
     this.directionType = TypeManager.DirectionType;
     this.keys = {};
   }
@@ -33,8 +35,8 @@ class Player extends GameObject {
 
         if (this.bullets.length < this.maxBullets) {
           const bullet = new Bullet(
-            this.x + this.size / 3,
-            this.y + this.size / 3,
+            this.x + this.size / 2.5,
+            this.y + this.size / 2.5,
             this.direction || this.directionType.UP
           );
 

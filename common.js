@@ -9,6 +9,10 @@ class GameObject {
     this.fillColor = "#FF0000";
   }
 
+  getColor() {
+    return this.fillColor;
+  }
+
   setSize(size) {
     this.size = size;
   }
