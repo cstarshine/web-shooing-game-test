@@ -46,7 +46,6 @@ class Player extends GameObject {
     }
 
     this.bullets = this.bullets.filter((bullet) => !bullet.isOutOfBounds());
-    objList.filter((obj) => !(obj instanceof Bullet && obj.isOutOfBounds()));
   }
 
   update() {

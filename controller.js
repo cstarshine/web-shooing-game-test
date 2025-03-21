@@ -3,7 +3,7 @@ class GameManager {
     this.score = 0;
     this.user = new Player();
     this.enemy = [];
-    this.maxEnemy = 10;
+    this.maxEnemy = 5;
     this.spawnRate = 1000;
     this.lastSpawnTime = null;
     this.objList = [];
@@ -30,6 +30,14 @@ class GameManager {
   }
 
   update() {
+    this.objList.filter(
+      (obj) =>
+        !(
+          (obj instanceof Enemy || obj instanceof Bullet) &&
+          obj.isOutOfBounds()
+        )
+    );
+
     this.objList.forEach((v) => {
       v.update();
     });
@@ -51,7 +59,6 @@ class GameManager {
       }
     }
     this.enemy = this.enemy.filter((enemy) => !enemy.isOutOfBounds());
-    objList.filter((obj) => !(obj instanceof Enemy && obj.isOutOfBounds()));
   }
 
   gameLoop() {
