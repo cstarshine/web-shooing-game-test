@@ -41,8 +41,9 @@ class GameManager {
   }
 }
 
+const gameManager = new GameManager();
+const objList = gameManager.objList;
 function gameStart() {
-  const gameManager = new GameManager();
   gameManager.initGame();
   gameManager.gameLoop();
 }

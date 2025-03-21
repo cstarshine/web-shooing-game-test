@@ -6,6 +6,7 @@ class GameObject {
     this.x = 0;
     this.y = 0;
     this.size = 0;
+    this.fillColor = "#FF0000";
   }
 
   setSize(size) {
@@ -42,6 +43,7 @@ class TypeManager {
     DOWN: "s",
     LEFT: "a",
     RIGHT: "d",
+    SPACE: " ",
   };
 
   directionToType(direction) {
@@ -54,6 +56,8 @@ class TypeManager {
         return DirectionType.LEFT;
       case "d":
         return DirectionType.RIGHT;
+      case " ":
+        return DirectionType.SPACE;
     }
   }
 }

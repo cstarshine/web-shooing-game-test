@@ -3,6 +3,8 @@ class Player extends GameObject {
     super();
     this.speed = 2;
     this.bullets = [];
+    this.maxBullets = 10;
+    this.fireRate = 500;
     this.directionType = TypeManager.DirectionType;
     this.keys = {};
   }
@@ -21,19 +23,34 @@ class Player extends GameObject {
     return this.speed;
   }
 
-  shoot(direction) {
-    if (this.bullets.length < 5) {
-      const bullet = new Bullet(
-        this.x + this.size / 3,
-        this.y + this.size / 3,
-        direction
-      );
-      this.bullets.push(bullet);
+  shoot() {
+    if (this.checkDirection(this.directionType.SPACE)) {
+      const now = Date.now();
+
+      // 마지막 발사 시간 확인 후 fireRate보다 크면 발사
+      if (!this.lastShotTime || now - this.lastShotTime > this.fireRate) {
+        this.lastShotTime = now; // 발사 시간 업데이트
+
+        if (this.bullets.length < this.maxBullets) {
+          const bullet = new Bullet(
+            this.x + this.size / 3,
+            this.y + this.size / 3,
+            this.direction || this.directionType.UP
+          );
+
+          this.bullets.push(bullet);
+          objList.push(bullet);
+        }
+      }
     }
+
+    this.bullets = this.bullets.filter((bullet) => !bullet.isOutOfBounds());
+    objList.filter((obj) => !(obj instanceof Bullet && obj.isOutOfBounds()));
   }
 
   update() {
     this.move();
+    this.shoot();
   }
 
   move() {
@@ -60,74 +77,5 @@ class Player extends GameObject {
 
   checkDirection(direction) {
     return this.keys[direction];
-  }
-
-  updateBullets() {
-    this.bullets = this.bullets.filter((bullet) => !bullet.isOutOfBounds());
-    this.bullets.forEach((bullet) => bullet.update());
-  }
-
-  renderBullets(ctx) {
-    this.bullets.forEach((bullet) => bullet.render(ctx));
-  }
-}
-
-class Bullet extends GameObject {
-  constructor(x, y, direction) {
-    super();
-    this.x = x;
-    this.y = y;
-    this.size = 5;
-    this.speed = 7;
-    this.direction = direction;
-  }
-
-  update() {
-    switch (this.direction) {
-      case "w":
-        this.y -= this.speed;
-        break;
-      case "a":
-        this.x -= this.speed;
-        break;
-      case "s":
-        this.y += this.speed;
-        break;
-      case "d":
-        this.x += this.speed;
-        break;
-    }
-  }
-
-  getSpeed() {
-    return this.speed;
-  }
-
-  isOutOfBounds() {
-    return this.x < 0 || this.x > 600 || this.y < 0 || this.y > 600;
-  }
-
-  render(ctx) {
-    ctx.beginPath();
-    let calcX = 0;
-    let calcY = 0;
-    switch (this.direction) {
-      case "w":
-        calcY = -30;
-        break;
-      case "a":
-        calcX = -30;
-        break;
-      case "s":
-        calcY = 30;
-        break;
-      case "d":
-        calcX = 30;
-        break;
-    }
-    ctx.arc(this.x + calcX, this.y + calcY, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = "#999999";
-    ctx.fill();
-    ctx.closePath();
   }
 }
