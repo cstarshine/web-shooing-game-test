@@ -10,20 +10,6 @@ class Enemy extends GameObject {
   }
   update() {
     this.y += this.speed;
-    // switch (this.direction) {
-    //   case "w":
-    //     this.y -= this.speed;
-    //     break;
-    //   case "up":
-    //     this.x -= this.speed;
-    //     break;
-    //   case "down":
-    //     this.y += this.speed;
-    //     break;
-    //   case "d":
-    //     this.x += this.speed;
-    //     break;
-    // }
   }
   getSpeed() {
     return this.speed;
