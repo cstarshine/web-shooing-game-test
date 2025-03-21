@@ -7,9 +7,14 @@ class Player extends GameObject {
     this.keys = {};
   }
 
-  setDirection(keys) {
-    console.log(keys);
-    this.keys = keys;
+  setUpInput() {
+    window.addEventListener("keydown", (e) => {
+      this.keys[e.key] = true;
+    });
+
+    window.addEventListener("keyup", (e) => {
+      this.keys[e.key] = false;
+    });
   }
 
   getSpeed() {
