@@ -1,27 +1,29 @@
 class Enemy extends GameObject {
-  constructor(x, y, direction) {
+  constructor(x, y) {
     super();
     this.x = x;
     this.y = y;
-    this.size = 10;
-    this.speed = 5;
-    this.direction = direction;
+    this.size = 20;
+    this.speed = 1;
+    this.direction = TypeManager.DirectionType.DOWN;
+    this.fillColor = "red";
   }
   update() {
-    switch (this.direction) {
-      case "w":
-        this.y -= this.speed;
-        break;
-      case "up":
-        this.x -= this.speed;
-        break;
-      case "down":
-        this.y += this.speed;
-        break;
-      case "d":
-        this.x += this.speed;
-        break;
-    }
+    this.y += this.speed;
+    // switch (this.direction) {
+    //   case "w":
+    //     this.y -= this.speed;
+    //     break;
+    //   case "up":
+    //     this.x -= this.speed;
+    //     break;
+    //   case "down":
+    //     this.y += this.speed;
+    //     break;
+    //   case "d":
+    //     this.x += this.speed;
+    //     break;
+    // }
   }
   getSpeed() {
     return this.speed;

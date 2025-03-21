@@ -2,9 +2,10 @@ class GameManager {
   constructor() {
     this.score = 0;
     this.user = new Player();
-    this.monster = [];
-    this.maxMonster = 10;
+    this.enemy = [];
+    this.maxEnemy = 10;
     this.spawnRate = 1000;
+    this.lastSpawnTime = null;
     this.objList = [];
   }
 
@@ -34,9 +35,29 @@ class GameManager {
     });
   }
 
+  spawnMonster() {
+    const now = Date.now();
+    if (!this.lastSpawnTime || now - this.lastSpawnTime > this.spawnRate) {
+      this.lastSpawnTime = now; // 발사 시간 업데이트
+
+      if (this.enemy.length < this.maxEnemy) {
+        const newEnemey = new Enemy(
+          Math.floor(Math.random() * (580 - 20 + 1)) + 20,
+          0
+        );
+
+        this.enemy.push(newEnemey);
+        objList.push(newEnemey);
+      }
+    }
+    this.enemy = this.enemy.filter((enemy) => !enemy.isOutOfBounds());
+    objList.filter((obj) => !(obj instanceof Enemy && obj.isOutOfBounds()));
+  }
+
   gameLoop() {
     this.update();
     this.render();
+    this.spawnMonster();
     requestAnimationFrame(this.gameLoop.bind(this));
   }
 }

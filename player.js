@@ -4,7 +4,7 @@ class Player extends GameObject {
     this.speed = 2;
     this.bullets = [];
     this.maxBullets = 10;
-    this.fireRate = 500;
+    this.fireRate = 250;
     this.fillColor = "lightblue";
 
     this.directionType = TypeManager.DirectionType;
@@ -29,7 +29,6 @@ class Player extends GameObject {
     if (this.checkDirection(this.directionType.SPACE)) {
       const now = Date.now();
 
-      // 마지막 발사 시간 확인 후 fireRate보다 크면 발사
       if (!this.lastShotTime || now - this.lastShotTime > this.fireRate) {
         this.lastShotTime = now; // 발사 시간 업데이트
 
